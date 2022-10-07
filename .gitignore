@@ -130,3 +130,9 @@ dmypy.json
 
 # PyCharm metadata
 .idea/
+
+# macOS metadata
+.DS_Store
+
+# Training logs
+lightning_logs/
