@@ -1,6 +1,8 @@
 from wordfreq_model import WordFreqModel, WordFreqLinearModel
 from datasets import get_spambase_dataloader
+from pytorch_lightning import Trainer
 
+GPUS=0
 def train():
     model = WordFreqModel()
     # model = WordFreqLinearModel()
