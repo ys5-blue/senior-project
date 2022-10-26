@@ -1,7 +1,6 @@
 import torch
 from torch import nn, optim
 from pytorch_lightning import LightningModule, Trainer
-from datasets import get_spambase_dataloader
 
 # TODO: change when we actually have GPUs
 GPUS = 0
@@ -35,24 +34,3 @@ class WordFreqLinearModel(WordFreqModel):
     def __init__(self):
         super().__init__()
         self.model = nn.Linear(57, 1)
-
-def train():
-    model = WordFreqModel()
-    # model = WordFreqLinearModel()
-    dataloader = get_spambase_dataloader()
-
-    trainer = Trainer(gpus=GPUS, max_epochs=100)
-    trainer.fit(model, dataloader)
-
-
-if __name__ == '__main__':
-    from argparse import ArgumentParser
-
-    p = ArgumentParser()
-    p.add_argument('--train', action='store_true')
-    args = p.parse_args()
-    
-    if args.train:
-        train()
-    else:
-        p.print_usage()
