@@ -18,8 +18,8 @@ class SpambaseDataset(Dataset):
 
 def get_spambase_dataloader():
     return DataLoader(SpambaseDataset(),
-            batch_size=64,
-            shuffle=True)
+                      batch_size=64,
+                      shuffle=True)
 
 
 
@@ -38,6 +38,11 @@ class EnronDataset(Dataset):
 
     def __getitem__(self, index):
         filename, label = self.files[index]
-        with open(filename) as f:
+        with open(filename, 'r', encoding='latin1') as f:
             text = f.read()
         return text, label
+
+def get_enron_dataloader():
+    return DataLoader(EnronDataset(),
+                      batch_size=16,
+                      shuffle=True)
