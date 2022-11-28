@@ -1,6 +1,6 @@
 from wordfreq_model import WordFreqModel, WordFreqLinearModel
 from spam_model import SpamModel
-from datasets import get_spambase_dataloader, get_enron_dataloader
+from datasets import get_spambase_dataloader, get_email_dataloader
 from pytorch_lightning import Trainer
 
 GPUS = 0
@@ -14,7 +14,7 @@ def train(modelname):
 
     if modelname == 'spamformer':
         model = SpamModel()
-        dataloader = get_enron_dataloader()
+        dataloader = get_email_dataloader()
         max_epochs = 10
 
     trainer = Trainer(gpus=GPUS, max_epochs=max_epochs)

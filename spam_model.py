@@ -23,9 +23,5 @@ class SpamModel(LightningModule):
         sequences, labels = batch
         batch = self.tokenizer(sequences, padding=True, truncation=True, return_tensors="pt")
         batch['labels'] = labels
-        # m = self.model(**batch)
         loss = self.model(**batch).loss
-
-        # accuracy = ((predicted_logits >= 0.5).int() == labels).float().mean()
-        # self.log('acc', accuracy, prog_bar=True)
         return loss

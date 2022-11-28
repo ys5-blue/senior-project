@@ -136,3 +136,6 @@ dmypy.json
 
 # Training logs
 lightning_logs/
+
+data/big15/
+data/ASNM-dataset/

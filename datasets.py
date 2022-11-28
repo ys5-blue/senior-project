@@ -42,7 +42,7 @@ class EnronDataset(Dataset):
             text = f.read()
         return text, label
 
-def get_enron_dataloader():
+def get_email_dataloader():
     return DataLoader(EnronDataset(),
                       batch_size=16,
                       shuffle=True)
