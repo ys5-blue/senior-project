@@ -46,3 +46,30 @@ def get_email_dataloader():
     return DataLoader(EnronDataset(),
                       batch_size=16,
                       shuffle=True)
+
+class MalwareDataset(Dataset):
+    def __init__(self, path='data/big15'):
+        super().__init__()
+        self.path = Path(path)
+        dataframe = pd.read_csv(self.path / 'trainLabels.csv')
+        self.labels = dataframe['Class']
+        self.hashes = dataframe['Id']
+
+    def __len__(self):
+        return len(self.hashes)
+
+    def __getitem__(self, index):
+        filename = self.path / 'train' / (self.hashes[index] + '.bytes')
+        with open(filename) as f:
+            bytestr = ''
+            for line in f:
+                if '?' in line: continue
+                # Trim off the address part
+                bytestr += line[9:]
+        byte_tens = torch.frombuffer(bytes.fromhex(bytestr), dtype=torch.uint8)
+        return byte_tens.long(), self.labels[index] - 1
+
+def get_malware_dataloader():
+    return DataLoader(MalwareDataset(),
+                      batch_size=1,
+                      shuffle=True)
