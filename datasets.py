@@ -66,8 +66,11 @@ class MalwareDataset(Dataset):
                 if '?' in line: continue
                 # Trim off the address part
                 bytestr += line[9:]
-        byte_tens = torch.frombuffer(bytes.fromhex(bytestr), dtype=torch.uint8)
-        return byte_tens.long(), self.labels[index] - 1
+        buffer = bytes.fromhex(bytestr)
+        if len(buffer) == 0:
+            return self.__getitem__(index - 1)
+        tensor = torch.frombuffer(buffer, dtype=torch.uint8)
+        return tensor.long(), self.labels[index] - 1
 
 def get_malware_dataloader():
     return DataLoader(MalwareDataset(),
